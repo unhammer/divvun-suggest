@@ -9,6 +9,7 @@ set +x
 export base=$PWD/python-build
 (
     cd ../../python
+    echo "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"
     "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"
 )
 
