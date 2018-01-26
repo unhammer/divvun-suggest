@@ -25,7 +25,7 @@ if [[ "$(uname)" = Darwin ]]; then
 fi
 
 export LD_LIBRARY_PATH="../../src/.libs:$LD_LIBRARY_PATH"
-export DYLD_LIBRARY_PATH="../../src/.libs:/usr/local/lib:${DYLD_LIBRARY_PATH:-}"
-export DYLD_FALLBACK_LIBRARY_PATH="../../src/.libs:/usr/local/lib:${DYLD_FALLBACK_LIBRARY_PATH:-}"
+export DYLD_LIBRARY_PATH="../../src/.libs:${DYLD_LIBRARY_PATH:-}"
+export DYLD_FALLBACK_LIBRARY_PATH="../../src/.libs:${DYLD_FALLBACK_LIBRARY_PATH:-}"
 
 "@PYTHON@" test-python-bindings.py
