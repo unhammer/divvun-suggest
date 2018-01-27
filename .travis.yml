@@ -12,6 +12,7 @@ addons:
     - gcc-5
     - g++-5
     - libstdc++-5-dev
+    - clang
     - libpugixml-dev
     - libxml2-utils
     - libarchive-dev
