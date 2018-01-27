@@ -44,5 +44,6 @@ clean-local:
 test: check
 
 debugs:
+	echo in checker/Makefile
 	echo "$(DYLD_LIBRARY_PATH)" "$(DYLD_FALLBACK_LIBRARY_PATH)"
-	echo "$$DYLD_LIBRARY_PATH" "$$DYLD_FALLBACK_LIBRARY_PATH"
+	sh -c 'echo "$$DYLD_LIBRARY_PATH" "$$DYLD_FALLBACK_LIBRARY_PATH"'
