@@ -21,7 +21,7 @@ addons:
       version: $TRAVIS_COMMIT
       description: "Build submitted via Travis CI"
     notification_email: unhammer+dill@mm.st
-    build_command_prepend: "./autogen.sh && ./configure --enable-checker --enable-python-bindings && make clean"
+    build_command_prepend: "./autogen.sh && ./configure --enable-checker --disable-python-bindings && make clean"
     build_command:   "make -j4"
     branch_pattern: coverity_scan
 
