@@ -13,13 +13,13 @@ cd "$(dirname "$0")"
 # Install the python lib in a subdir here:
 set +x
 export base=$PWD/python-build
-(
-    cd ../../python
-    echo "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"
-    if ! "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"; then
-        echo "Failed to install python libs to $base, trying anyway with guessed PYTHONPATH ..."
-    fi
-)
+# (
+#     cd ../../python
+#     echo "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"
+#     if ! "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"; then
+#         echo "Failed to install python libs to $base, trying anyway with guessed PYTHONPATH ..."
+#     fi
+# )
 export PYTHONPATH="$base:$PYTHONPATH"
 
 if [[ "$(uname)" = Darwin ]]; then
