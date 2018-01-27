@@ -70,7 +70,8 @@ make distclean
 ./configure --enable-checker --enable-python-bindings
 make -j3
 if [[ $TRAVIS_OS_NAME = osx ]]; then
-    export TRAVIS_MACOS_LIBS="/usr/local/Cellar/pugixml/1.8.1/lib/pugixml-1.8:/usr/local/lib:/usr/local/opt/libarchive/lib:/usr/local/lib"
+    # Important: /usr/local/lib last, since that includes an older version of libarchive :(
+    export TRAVIS_MACOS_LIBS="/usr/local/Cellar/pugixml/1.8.1/lib/pugixml-1.8:/usr/local/opt/libarchive/lib:/usr/local/lib"
     export DYLD_LIBRARY_PATH="${TRAVIS_MACOS_LIBS}:${DYLD_LIBRARY_PATH:-}"
     export DYLD_FALLBACK_LIBRARY_PATH="${TRAVIS_MACOS_LIBS}:${DYLD_FALLBACK_LIBRARY_PATH:-}"
     echo "In travis-build:"
