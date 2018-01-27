@@ -42,3 +42,7 @@ clean-local:
 	rm -rf python-build
 
 test: check
+
+debugs:
+	echo "$(DYLD_LIBRARY_PATH)" "$(DYLD_FALLBACK_LIBRARY_PATH)"
+	echo "\$DYLD_LIBRARY_PATH)" "\$DYLD_FALLBACK_LIBRARY_PATH)"
