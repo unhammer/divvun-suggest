@@ -24,6 +24,9 @@ if [[ "$(uname)" = Darwin ]]; then
     PYTHONPATH="../../python/build/lib.macosx-${os_vers_major}.${os_vers_minor}-x86_64-3.6:$PYTHONPATH"
 fi
 
+echo "In run-python-bindings:"
+echo "DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH"
+echo "DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH"
 export LD_LIBRARY_PATH="../../src/.libs:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="../../src/.libs:${DYLD_LIBRARY_PATH:-}"
 export DYLD_FALLBACK_LIBRARY_PATH="../../src/.libs:${DYLD_FALLBACK_LIBRARY_PATH:-}"
