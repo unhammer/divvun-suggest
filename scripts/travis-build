@@ -80,7 +80,7 @@ fi
 ./autogen.sh
 if [[ $TRAVIS_OS_NAME = osx ]]; then
     # TODO: No idea how to get this one working:
-    ./configure "$@" --disable-python-bindings
+    ./configure "$@"
 else
     ./configure "$@"
 fi
