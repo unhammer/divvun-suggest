@@ -9,7 +9,10 @@ set +x
 export base=$PWD/python-build
 (
     cd ../../python
-    "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"
+    if ! "@PYTHON@" setup.py install -f --install-base="$base" --install-purelib="$base" --install-platlib="$base" --install-scripts="$base" --install-data="$base" --install-headers="$base"; then
+        echo "Python setup.py install failed! Probably on travis mac and don't know what to do, bailing out ..."
+        exit 77
+    fi
 )
 
 export PYTHONPATH="$base:$PYTHONPATH"
