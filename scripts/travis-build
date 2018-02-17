@@ -40,8 +40,6 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
         # Other locales may make Perl unhappy
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
-        mkdir -p /tmp/aad.$$
-        cd /tmp/aad.$$
         mkdir -p "$HOME"/gtd-cache
         tarball="$HOME"/gtd-cache/apertium-all-dev.tar.bz2
         if [[ -f "${tarball}" ]]; then
@@ -49,6 +47,7 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
         else
             curl https://apertium.projectjj.com/osx/nightly/apertium-all-dev.tar.bz2 > "${tarball}"
         fi
+        cd
         tar -jxf "${tarball}"
         cd apertium-all-dev
         (
@@ -65,8 +64,6 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
         sudo mkdir -p "$WHERE/"
         sudo cp -af ./* "$WHERE/"
         sudo chmod -R uga+r "$WHERE"
-        cd /tmp
-        rm -rf /tmp/aad.$$
     )
 else
     wget http://apertium.projectjj.com/apt/install-nightly.sh -O - | sudo bash
