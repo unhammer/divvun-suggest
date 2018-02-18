@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Not used, but useful for showing the suffix LO wants
+suffixes () {
+    for python in /Applications/LibreOffice.app/Contents/Frameworks/LibreOfficePython.framework/Versions/*/bin/python*; do
+        if [[ $python =~ .*python[0-9.m]+$ ]]; then
+            "$python" -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))'
+        fi
+    done | sort -u
+}
+
+# Why does LO-python require this naming scheme?
+for f in build/lib.macosx*/_libdivvun.cpython-3*-darwin.so; do
+    if [[ -e $f ]]; then
+        dir="$(dirname "$f")"
+        b="$(basename "$f")"    # _libdivvun.cpython-35m-darwin.so
+        bd="${b//-darwin}"      # _libdivvun.cpython-35m.so
+        bdn="${bd//3/3.}"       # _libdivvun.cpython-3.5m.so
+        f2="${dir}"/"${bdn}"
+        if [[ ! -e $f2 ]]; then
+            echo "Copying $f to $f2 for LibreOffice Mac"
+            cp "$f" "$f2"
+        fi
+    fi
+done

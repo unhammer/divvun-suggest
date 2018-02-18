@@ -6,6 +6,7 @@ BUILT_SOURCES = libdivvun_wrap.cpp libdivvun.py
 CLEANFILES = $(BUILT_SOURCES)
 
 all-local: $(BUILT_SOURCES)
+	@./mac-libreoffice-workaround
 
 %_wrap.cpp %.py: %.i setup.py std_unique_ptr.i
 	$(SWIG) -c++ -python -I$(top_srcdir)/src/lib -o $*_wrap.cpp -outdir . $(srcdir)/$*.i

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e -u
+
+TRGDIR="$(pwd)"
+export TRGDIR
+
+munge_path () {
+    # Bug in apertium-all-dev.tar.gz?
+    sed 's%^/opt/osx/%/opt/local/%'
+}
+
+relativise_mac_lib () {
+    lib="$1"
+    name="$(basename "${lib}")"
+    rellib="${TRGDIR}/${name}"
+    if [[ -e ${rellib} ]]; then
+        echo "${name} already exists in ${TRGDIR}, not reprocessing"
+        return
+    elif [[ ! -e ${lib} ]]; then
+        echo "WARNING: ${lib} doesn't exist"
+        return
+    fi
+    echo "Processing ${lib}"
+    cp "${lib}" "${rellib}"
+    # Assumes no deps have spaces in their paths
+    deps=( $(otool -L "${rellib}" | awk '$0 ~/^\t/ && $1 && $1!~"/usr/lib" {print $1}' | munge_path ) )
+    for d in "${deps[@]}"; do
+        dname="$(basename "$d")"
+        install_name_tool -change "$d" @loader_path/"${dname}" "${rellib}"
+    done
+    for d in "${deps[@]}"; do
+        relativise_mac_lib "$d"
+    done
+}
+
+relativise_mac_lib "$@"
