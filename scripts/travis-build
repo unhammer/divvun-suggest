@@ -75,6 +75,7 @@ else
 fi
 
 ./autogen.sh
+configure "$@"
 make -j3
 make check VERBOSE=true
 sudo make install
