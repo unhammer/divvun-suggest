@@ -23,14 +23,16 @@ relativise_mac_lib () {
     fi
     echo "Processing ${lib}"
     ls -lah "${lib}"
+    set -x
     cp -L "${lib}" "${rellib}"
+    chmod 755 "${rellib}"
     # Assumes no deps have spaces in their paths
     deps=( $(otool -L "${rellib}" | awk '$0 ~/^\t/ && $1 && $1!~"/usr/lib" {print $1}' | munge_path ) )
     for d in "${deps[@]}"; do
         dname="$(basename "$d")"
-        echo install_name_tool -change "$d" @loader_path/"${dname}" "${rellib}"
         install_name_tool -change "$d" @loader_path/"${dname}" "${rellib}"
     done
+    set +x
     for d in "${deps[@]}"; do
         relativise_mac_lib "$d"
     done
