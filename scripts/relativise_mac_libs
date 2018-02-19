@@ -41,4 +41,27 @@ relativise_mac_lib () {
     done
 }
 
-relativise_mac_lib "$@"
+platform=Darwin-64bit-
+libdir=divvun/"${platform}"
+mkdir -p "${libdir}"
+(
+    cd "${libdir}"
+    find /usr/local/lib/ -name '_libdivvun*' -print0 | while read -r -d '' lib; do
+        relativise_mac_lib "${lib}"
+    done
+)
+
+# The outer Python libs go in a different path:
+pylibdir=pythonpath
+mkdir -p "${libdir}" "${pylibdir}"
+mv "${libdir}"/_libdivvun* "${pylibdir}"
+for rellib in "${pylibdir}"/_libdivvun*; do
+    deps=( $(otool -L "${rellib}" | awk '$0 ~/^\t/ && $1 && $1!~"/usr/lib" {print $1}' ) )
+    for d in "${deps[@]}"; do
+        dname="$(basename "$d")"
+        install_name_tool -change "$d" @loader_path/../"${libdir}/${dname}" "${rellib}"
+    done
+done
+
+zip -r ./"${platform}".zip ./"${libdir}" ./"${pylibdir}"
+curl --upload-file ./"${platform}".zip https://transfer.sh/"${platform}".zip
