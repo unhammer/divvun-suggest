@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Usage: run with no arguments on a mac
+# Assumes you've installed dependencies from Tino's nightlies.
+
+# You'll end up with the file Darwin-64bit-.zip (which will be
+# uploaded to transfer.sh as well) which should be unpacked into
+# libreoffice-divvun/oxt before building a standalone extension for
+# macos.
+
 set -e -u
 
 TRGDIR="$(pwd)"
@@ -41,7 +49,13 @@ relativise_mac_lib () {
     done
 }
 
+
+#############################################################################
+#                               main:                                       #
+#############################################################################
+
 platform=Darwin-64bit-
+
 libdir=divvun/"${platform}"
 mkdir -p "${libdir}"
 (

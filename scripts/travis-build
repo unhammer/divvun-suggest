@@ -94,15 +94,5 @@ if [[ $TRAVIS_OS_NAME = osx && $CC = clang ]]; then
     )
     make -j3
     sudo make install
-
-    libdir=Darwin-64bit-
-    mkdir "${libdir}"
-    (
-        cd "${libdir}"
-        find /usr/local/lib/ -name '_libdivvun*' -print0 | while read -r -d '' lib; do
-            bash ../scripts/relativise_mac_libs "${lib}"
-        done
-    )
-    zip -r ./"${libdir}".zip ./"${libdir}"
-    curl --upload-file ./"${libdir}".zip https://transfer.sh/"${libdir}".zip
+    ../scripts/bundle_mac_libs
 fi
