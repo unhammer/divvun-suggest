@@ -67,7 +67,8 @@ mkdir -p "${libdir}"
 
 # The outer Python libs go in a different path:
 pylibdir=pythonpath
-mkdir -p "${libdir}" "${pylibdir}"
+mkdir -p "${pylibdir}"
+ls -lah "${libdir}" "${pylibdir}"
 mv "${libdir}"/_libdivvun* "${pylibdir}"
 for rellib in "${pylibdir}"/_libdivvun*; do
     deps=( $(otool -L "${rellib}" | awk '$0 ~/^\t/ && $1 && $1!~"/usr/lib" {print $1}' ) )
