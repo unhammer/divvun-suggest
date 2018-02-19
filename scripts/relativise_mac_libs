@@ -7,7 +7,9 @@ export TRGDIR
 
 munge_path () {
     # Bug in apertium-all-dev.tar.gz?
-    sed 's%^/opt/osx/%/usr/local/%'
+    # Some libs refer to /opt/osx, others have no paths
+    sed -e 's%^/opt/osx/%/usr/local/%' \
+        -e 's%^lib%/usr/local/lib/lib%'
 }
 
 relativise_mac_lib () {
@@ -23,7 +25,6 @@ relativise_mac_lib () {
     fi
     echo "Processing ${lib}"
     ls -lah "${lib}"
-    set -x
     cp -L "${lib}" "${rellib}"
     chmod 755 "${rellib}"
     # Assumes no deps have spaces in their paths
@@ -32,14 +33,9 @@ relativise_mac_lib () {
         dname="$(basename "$d")"
         install_name_tool -change "$d" @loader_path/"${dname}" "${rellib}"
     done
-    set +x
     for d in "${deps[@]}"; do
         munged=$(munge_path <<< "$d")
-        if ! relativise_mac_lib "${munged}"; then
-            echo "Trying /usr/local/lib instead"
-            munged_base="$(basename "${munged}")"
-            relativise_mac_lib "/usr/local/lib/${munged_base}"
-        fi
+        relativise_mac_lib "${munged}"
     done
 }
 
