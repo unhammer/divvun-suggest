@@ -16,10 +16,10 @@ relativise_mac_lib () {
     rellib="${TRGDIR}/${name}"
     if [[ -e ${rellib} ]]; then
         echo "${name} already exists in ${TRGDIR}, not reprocessing"
-        return
+        return 0
     elif [[ ! -e ${lib} ]]; then
         echo "WARNING: ${lib} doesn't exist"
-        return
+        return 1
     fi
     echo "Processing ${lib}"
     ls -lah "${lib}"
@@ -35,7 +35,11 @@ relativise_mac_lib () {
     set +x
     for d in "${deps[@]}"; do
         munged=$(munge_path <<< "$d")
-        relativise_mac_lib "$munged"
+        if ! relativise_mac_lib "${munged}"; then
+            echo "Trying /usr/local/lib instead"
+            munged_base="$(basename "${munged}")"
+            relativise_mac_lib "/usr/local/lib/${munged_base}"
+        fi
     done
 }
 
