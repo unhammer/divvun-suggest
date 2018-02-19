@@ -10,9 +10,6 @@
 
 set -e -u
 
-TRGDIR="$(pwd)"
-export TRGDIR
-
 munge_path () {
     # Some libs refer to /opt/osx, others have no parent dir – bug in apertium-all-dev.tar.gz?
     sed -e 's%^/opt/osx/%/usr/local/%' \
@@ -23,9 +20,9 @@ munge_path () {
 relativise_mac_lib () {
     lib="$1"
     name="$(basename "${lib}")"
-    rellib="${TRGDIR}/${name}"
+    rellib="./${name}"
     if [[ -e ${rellib} ]]; then
-        echo "${name} already exists in ${TRGDIR}, not reprocessing"
+        echo "${name} already exists in ${PWD}, not reprocessing"
         return 0
     elif [[ ! -e ${lib} ]]; then
         echo "WARNING: ${lib} doesn't exist"
