@@ -94,5 +94,5 @@ if [[ $TRAVIS_OS_NAME = osx && $CC = clang ]]; then
     )
     make -j3
     sudo make install
-    ./bundle_mac_libs
+    scripts/bundle_mac_libs
 fi
