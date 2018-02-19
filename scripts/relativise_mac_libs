@@ -7,7 +7,7 @@ export TRGDIR
 
 munge_path () {
     # Bug in apertium-all-dev.tar.gz?
-    sed 's%^/opt/osx/%/opt/local/%'
+    sed 's%^/opt/osx/%/usr/local/%'
 }
 
 relativise_mac_lib () {
