@@ -18,5 +18,6 @@ export base=$PWD/python-build
 export PYTHONPATH="$base:$PYTHONPATH"
 export LD_LIBRARY_PATH="../../src/.libs:$LD_LIBRARY_PATH"
 export DYLD_LIBRARY_PATH="../../src/.libs:$DYLD_LIBRARY_PATH"
+export DYLD_FALLBACK_LIBRARY_PATH="../../src/.fallback_libs:$DYLD_FALLBACK_LIBRARY_PATH"
 
 "@PYTHON@" test-python-bindings.py
