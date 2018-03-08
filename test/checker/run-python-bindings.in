@@ -22,8 +22,8 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
         cd "$base"
         pyclib=$("@PYTHON@" -c 'import sysconfig;print("_libdivvun" + sysconfig.get_config_var("EXT_SUFFIX"))')
         dep=$(otool -L "$pyclib" | grep -m1 -o '[^ ]*/libdivvun[.]0[.]dylib')
-        ls -la ../../../.libs
-        install_name_tool -change "${dep}" @loader_path/../../../.libs/libdivvun.0.dylib "$pyclib"
+        ls -la ../../../src/.libs
+        install_name_tool -change "${dep}" @loader_path/../../../src/.libs/libdivvun.0.dylib "$pyclib"
     )
 fi
 
