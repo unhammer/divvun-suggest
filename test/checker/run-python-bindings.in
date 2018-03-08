@@ -17,7 +17,14 @@ export base=$PWD/python-build
 
 export PYTHONPATH="$base:$PYTHONPATH"
 export LD_LIBRARY_PATH="../../src/.libs:$LD_LIBRARY_PATH"
-export DYLD_LIBRARY_PATH="../../src/.libs:$DYLD_LIBRARY_PATH"
-export DYLD_FALLBACK_LIBRARY_PATH="../../src/.fallback_libs:$DYLD_FALLBACK_LIBRARY_PATH"
+if [[ $TRAVIS_OS_NAME = osx ]]; then
+    (
+        cd "$base"
+        ext=$("@PYTHON@" -c 'import sysconfig;print(sysconfig.get_config_var("EXT_SUFFIX"))')
+        dep=$(otool -L _libdivvun."$ext" | grep -m1 -o '[^ ]*/libdivvun[.]0[.]dylib')
+        ls -la ../../../.libs
+        install_name_tool -change "${dep}" @loader_path/../../../.libs/libdivvun.0.dylib _libdivvun."$ext"
+    )
+fi
 
 "@PYTHON@" test-python-bindings.py
