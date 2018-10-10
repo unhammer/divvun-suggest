@@ -39,7 +39,7 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
 
     (
         # A travis-caching version of
-        # http://apertium.projectjj.com/osx/install-nightly.sh
+        # https://apertium.projectjj.com/osx/install-nightly.sh
         WHERE='/usr/local'
         # Other locales may make Perl unhappy
         export LANG=en_US.UTF-8
@@ -59,13 +59,11 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
             find . -type f -name '*.la' -exec rm -fv '{}' \;
         )
         echo "Fixing hardcoded paths"
-        set -x
-        grep -rl '/opt/osx' bin
-        FILES=$(grep -El '^#!/' $(grep -rl '/opt/osx' bin))
-        FILES="$FILES $(grep -rl '/opt/osx' lib/pkgconfig)"
+        FILES=$(grep -El '^#!/' $(grep -rl '/usr/local' bin))
+        FILES="$FILES $(grep -rl '/usr/local' lib/pkgconfig)"
         for FILE in $FILES; do
             echo "Fixing $FILE"
-            perl -pe "s@/opt/osx@$WHERE@g;" -i.orig "$FILE"
+            perl -pe "s@/usr/local@$WHERE@g;" -i.orig "$FILE"
         done
         sudo mkdir -p "$WHERE/"
         sudo cp -af ./* "$WHERE/"
