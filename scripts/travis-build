@@ -60,6 +60,7 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
         )
         echo "Fixing hardcoded paths"
         set -x
+        grep -rl '/opt/osx' bin
         FILES=$(grep -El '^#!/' $(grep -rl '/opt/osx' bin))
         FILES="$FILES $(grep -rl '/opt/osx' lib/pkgconfig)"
         for FILE in $FILES; do
