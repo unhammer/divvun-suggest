@@ -120,14 +120,14 @@ inline Casing getCasing(u16string input) {
 // least it works, if the user locale is OK.
 inline std::u16string toupper(const string& input) {
 	std::wstring w = wideFromUtf8(input);
-	std::setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 	std::transform(w.begin(), w.end(), w.begin(), std::towupper);
 	return fromUtf8(wideToUtf8(w));
 }
 
 inline std::u16string totitle(const string& input) {
 	std::wstring w = wideFromUtf8(input);
-	std::setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 	std::transform(w.begin(), w.begin()+1, w.begin(), std::towupper);
 	return fromUtf8(wideToUtf8(w));
 }
