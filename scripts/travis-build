@@ -37,38 +37,39 @@ if [[ $TRAVIS_OS_NAME = osx ]]; then
     CPPFLAGS="${CPPFLAGS:-} -I/usr/local/opt/libarchive/include"
     PKG_CONFIG_PATH="${PKG_CONFIG_PATH:-}:/usr/local/opt/libarchive/lib/pkgconfig"
 
-    (
-        # A travis-caching version of
-        # https://apertium.projectjj.com/osx/install-nightly.sh
-        WHERE='/usr/local'
-        # Other locales may make Perl unhappy
-        export LANG=en_US.UTF-8
-        export LC_ALL=en_US.UTF-8
-        mkdir -p "$HOME"/gtd-cache
-        tarball="$HOME"/gtd-cache/apertium-all-dev.tar.bz2
-        if [[ -f "${tarball}" ]]; then
-            stat -f "Reusing cached %N from %Sm" "${tarball}" # assuming BSD stat
-        else
-            curl https://apertium.projectjj.com/osx/nightly/apertium-all-dev.tar.bz2 > "${tarball}"
-        fi
-        cd
-        tar -jxf "${tarball}"
-        cd apertium-all-dev
-        (
-            set +e
-            find . -type f -name '*.la' -exec rm -fv '{}' \;
-        )
-        echo "Fixing hardcoded paths"
-        FILES=$(grep -El '^#!/' $(grep -rl '/usr/local' bin))
-        FILES="$FILES $(grep -rl '/usr/local' lib/pkgconfig)"
-        for FILE in $FILES; do
-            echo "Fixing $FILE"
-            perl -pe "s@/usr/local@$WHERE@g;" -i.orig "$FILE"
-        done
-        sudo mkdir -p "$WHERE/"
-        sudo cp -af ./* "$WHERE/"
-        sudo chmod -R uga+r "$WHERE"
-    )
+    curl -L https://apertium.projectjj.com/osx/install-nightly.sh | sudo bash
+    # (
+    #     # A travis-caching version of
+    #     # https://apertium.projectjj.com/osx/install-nightly.sh
+    #     WHERE='/usr/local'
+    #     # Other locales may make Perl unhappy
+    #     export LANG=en_US.UTF-8
+    #     export LC_ALL=en_US.UTF-8
+    #     mkdir -p "$HOME"/gtd-cache
+    #     tarball="$HOME"/gtd-cache/apertium-all-dev.tar.bz2
+    #     if [[ -f "${tarball}" ]]; then
+    #         stat -f "Reusing cached %N from %Sm" "${tarball}" # assuming BSD stat
+    #     else
+    #         curl https://apertium.projectjj.com/osx/nightly/apertium-all-dev.tar.bz2 > "${tarball}"
+    #     fi
+    #     cd
+    #     tar -jxf "${tarball}"
+    #     cd apertium-all-dev
+    #     (
+    #         set +e
+    #         find . -type f -name '*.la' -exec rm -fv '{}' \;
+    #     )
+    #     echo "Fixing hardcoded paths"
+    #     FILES=$(grep -El '^#!/' $(grep -rl '/usr/local' bin))
+    #     FILES="$FILES $(grep -rl '/usr/local' lib/pkgconfig)"
+    #     for FILE in $FILES; do
+    #         echo "Fixing $FILE"
+    #         perl -pe "s@/usr/local@$WHERE@g;" -i.orig "$FILE"
+    #     done
+    #     sudo mkdir -p "$WHERE/"
+    #     sudo cp -af ./* "$WHERE/"
+    #     sudo chmod -R uga+r "$WHERE"
+    # )
 else
     wget http://apertium.projectjj.com/apt/install-nightly.sh -O - | sudo bash
     sudo apt-get -f install -y libhfst-dev libcg3-dev hfst-ospell-dev swig3.0 libpython3-dev
