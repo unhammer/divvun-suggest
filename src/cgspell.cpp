@@ -161,6 +161,9 @@ void Speller::spell(const string& inform, std::ostream& os)
 		while(!cq.empty() && (slimit--) > 0) {
 			const auto& corrform = cq.top().first;
 			const Weight& w = cq.top().second;
+			if(inform == "bidjojuvvojit") {
+				std::cerr << slimit<<"\t"<<corrform<<":"<<w << std::endl;
+			}
 			if(max_weight > 0.0 && w >= max_weight) {
 				break;
 			}
