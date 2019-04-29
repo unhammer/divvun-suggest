@@ -93,6 +93,12 @@ curl --upload-file ./"${platform}".zip https://filepush.co/upload/"${platform}".
 cd "${pylibdir}"
 curl http://gtweb.uit.no/se.zcheck > se.zcheck
 set -x
+unzip se.zcheck
+mkdir modes
+/usr/local/bin/divvun-gen-sh -d modes pipespec.xml
+echo "Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid." | sh modes/smegram.mode
+echo "Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid." | sh modes/trace-smegram.mode
+echo "Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid." | sh modes/trace-smegram5-spell.mode
 echo "Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid." | /usr/local/bin/divvun-checker -a se.zcheck -n smegram
 python3 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
 python3.5 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
