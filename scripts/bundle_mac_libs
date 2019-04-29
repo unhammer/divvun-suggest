@@ -88,3 +88,13 @@ fi
 
 zip -r ./"${platform}".zip ./"${libdir}" ./"${pylibdir}"
 curl --upload-file ./"${platform}".zip https://filepush.co/upload/"${platform}".zip
+
+(
+cd "${pylibdir}"
+curl http://gtweb.uit.no/se.zcheck > se.zcheck
+set -x
+python3 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
+python3.5 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
+python3.6 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
+python3.7 -c 'import libdivvun; s=libdivvun.ArCheckerSpec("'"${PWD}"'/se.zcheck");smegram=s.getChecker("smegram",False);print([(e.rep,e.msg,e.beg,e.end,e.form,e.dsc,e.err) for e in libdivvun.proc_errs_bytes(smegram,"Eat ge mii liiko go skuvllat bidjojuvvojit vuostálagaid.")]);import _libdivvun;print("    "+ _libdivvun.__file__)'
+)
