@@ -90,7 +90,7 @@ zip -r ./"${platform}".zip ./"${libdir}" ./"${pylibdir}"
 cat <<EOF
 
              🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
-               UPLOADING TO FILEPUSH
+             UPLOADING TO FILEPUSH
              🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 
 EOF

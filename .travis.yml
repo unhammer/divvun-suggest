@@ -37,6 +37,8 @@ compiler:
   - clang
   - gcc
 
+osx_image: xcode11.3
+
 before_install:
   - if [[ $TRAVIS_BRANCH = coverity_scan ]]; then echo "We only coverity_scan for one square of the matrix, exiting"; exit 0; fi
 
